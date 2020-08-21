@@ -1,0 +1,26 @@
+{
+  "name": "middlewareconnectionfrommsaccess",
+  "version": "1.3.7",
+  "description": "this used to connect to msaccess and get data",
+  "main": "connection.js",
+  "dependencies": {
+    "node-adodb": "^5.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node connection.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gunasundarigithub/Middleware.git"
+  },
+  "keywords": [
+    "msaccess"
+  ],
+  "author": "Guna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gunasundarigithub/Middleware/issues"
+  },
+  "homepage": "https://github.com/gunasundarigithub/Middleware#readme"
+}

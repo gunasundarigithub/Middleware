@@ -1,10 +1,10 @@
 'use strict';
  
 const ADODB = require('node-adodb');
-const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Shift Scheduler APP.accdb;');
+const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Shift_Scheduler.mdb;');
  
 connection
-  .execute('INSERT INTO Team(Team_id, Team_name) VALUES ("Ent",6)')
+  .execute('INSERT INTO Team(Team_id, Team_name) VALUES (8,"Anna")')
   .then(data => {
     console.log(JSON.stringify(data, null, 2));
   })

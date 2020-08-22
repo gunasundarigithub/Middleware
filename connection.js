@@ -58,14 +58,14 @@ const query = 'Select * FROM  team';
 
 //To get shift schedule of selected team with respect to month
 
-app.get('/getcurrentshift:team_id:month_number',(req,res)=>{
+app.get('/getshift',(req,res)=>{
 
-console.log(req.params.team_id)
-console.log(req.params.month_number)
+console.log(req.query.team_id)
+console.log(req.query.month_number)
 
-const query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.params.team_id}' AND Month = '${req.params.month_number}'`;
+const Shift_query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
 
-  connection.query(query).then(data => {
+  connection.query(Shift_query).then(data => {
    // console.log(JSON.stringify(data));
     const result = JSON.stringify(data);
     console.log(data)
@@ -77,28 +77,23 @@ const query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.params.team_id}' AN
 
 });
 
-//   app.put('/updateshift:team_id&month_number',(req,res)=>{
+//To update the shift after clicking on submit
+app.put('/updateshift',(req,res)=>{
 
-//     console.log(req.params.team_id)
-//     console.log(req.params.month_number)
-    
-//     const query = `SELECT * FROM SCHEDULE WHERE team_id = '${req.params.team_id}' AND month_number = '${req.params.month_number}'`;
-    
-//      //res.send('Hello World, from sadsadsadsexpress')
-//       connection.query(query).then(data => {
-//        // console.log(JSON.stringify(data));
-//         const result = JSON.stringify(data);
-//         console.log(data)
-//         res.send(data)
-//       })
-//       .catch(error => {
-//         console.error(error);
-//       });
+console.log(req.query)
+console.log(req.query.shift)
+const update_query = `Update Schedule set shift = '${req.query.shift}', General_shift_hours = '${req.query.g_hours}',Morn_shift_hours = '${req.query.M_hours}',Night_shift_hours = '${req.query.N_hours}',Leave_hours = '${req.query.L_hours}',T_H_hours = '${req.query.total_hours}' WHERE Employee_name ='${req.query.Employee_name}'`;
+connection.query(update_query) 
+
+res.send('updated successfully')
+  
+  .catch(error => {
+   console.error(error);
+  });
+
+ });
 
 
-
-
- 
 
 var port = 3259;
 

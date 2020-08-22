@@ -58,7 +58,7 @@ const query = 'Select * FROM  team';
 
 //To get shift schedule of selected team with respect to month
 
-app.get('/getshift',(req,res)=>{
+app.get('/getcurrentshift',(req,res)=>{
 
 console.log(req.query.team_id)
 console.log(req.query.month_number)
@@ -94,6 +94,69 @@ res.send('updated successfully')
  });
 
 
+
+//To get the shift after clicking on the previous month list, it will get details from 2 tables (schedule and shift)
+
+ app.get('/getshift',(req,res)=>{
+
+  console.log(req.query.team_id)
+  console.log(req.query.month_number)
+  
+ // const Shift_query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
+  
+  const shift_query1 = `SELECT * FROM SCHEDULE INNER JOIN SHIFT WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number} `;
+
+    connection.query(Shift_query).then(data => {
+     // console.log(JSON.stringify(data));
+      const result = JSON.stringify(data);
+      console.log(data)
+      res.send(data)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+    
+  });
+
+// To get the employee name list 
+
+app.get('/getemployee',(req,res)=>{
+
+  console.log(req.query.team_id)
+  
+  
+  const Shift_query = `SELECT * FROM Employee WHERE Team_id = '${req.query.team_id}' `;
+  
+    connection.query(Shift_query).then(data => {
+     // console.log(JSON.stringify(data));
+      const result = JSON.stringify(data);
+      console.log(data)
+      res.send(data)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  
+  });
+
+// To insert in to the schedule table if it is first time shift update
+
+  app.post('/postschedule',(req,res)=>{
+
+    console.log(req.query.team_id)
+    console.log(req.query.month_number)
+    
+    const insert_query = `INSERT INTO SCHEDULE (Date_field, Employee_name, shift, General_shift_hours, Morn_shfit_hours, Night_shift_hours, Leave_hours, Total_hours, Team_id, Month) VALUES ('cellvalues_date',cellvalues_employee,cellvalues_shift,cellvalues_gsh,cellvalues_msh,cellvalues_nsh,cellvalues_leavehours,cellvalues_thours,team_id,month_number) `;
+    
+    connection.query(insert_query) 
+
+    res.send('record inserted successfully')
+  
+  .catch(error => {
+   console.error(error);
+  });
+
+ });
 
 var port = 3259;
 

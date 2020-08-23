@@ -103,10 +103,11 @@ res.send('updated successfully')
   console.log(req.query.month_number)
   
  // const Shift_query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
+ const shift_query = `SELECT * FROM Schedule t1 INNER JOIN Shift t2 ON t1.Team_id = t2.Team_id
+ WHERE t1.Team_id = '${req.query.team_id}' AND t2.Month = '${req.query.month_number}'`;
   
-  const shift_query1 = `SELECT * FROM SCHEDULE INNER JOIN SHIFT WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number} `;
 
-    connection.query(Shift_query).then(data => {
+    connection.query(shift_query).then(data => {
      // console.log(JSON.stringify(data));
       const result = JSON.stringify(data);
       console.log(data)
@@ -123,9 +124,10 @@ res.send('updated successfully')
 app.get('/getemployee',(req,res)=>{
 
   console.log(req.query.team_id)
+console.log(req.query)
+console.log(req)
   
-  
-  const Shift_query = `SELECT * FROM Employee WHERE Team_id = '${req.query.team_id}' `;
+  const Shift_query =`SELECT * FROM Employee WHERE Team_id = '${req.query.team_id}'`;
   
     connection.query(Shift_query).then(data => {
      // console.log(JSON.stringify(data));
@@ -158,7 +160,7 @@ app.get('/getemployee',(req,res)=>{
 
  });
 
-var port = 3259;
+var port = 3260;
 
 app.listen(port, function(){
 	console.log("CORS-enabled web server is now running on port : " + port);

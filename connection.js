@@ -124,10 +124,9 @@ res.send('updated successfully')
 app.get('/getemployee',(req,res)=>{
 
   console.log(req.query.team_id)
-console.log(req.query)
-console.log(req)
+
   
-  const Shift_query =`SELECT * FROM Employee WHERE Team_id = '${req.query.team_id}'`;
+  const Shift_query =`SELECT * FROM Employee where Team_id=${req.query.team_id}`;
   
     connection.query(Shift_query).then(data => {
      // console.log(JSON.stringify(data));

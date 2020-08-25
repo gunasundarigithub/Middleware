@@ -144,11 +144,11 @@ app.get('/getemployee',(req,res)=>{
 
   app.post('/postschedule',(req,res)=>{
 
-    console.log(req.query.team_id)
+    console.log(req.body.Month)
     console.log(req.query.month_number)
     
     var new_schedule = {
-      Month_name:Month,
+      Month_name:req.body.Month,
       Year:year,
       Team_id:team_id,
       Employee_name:Employee_name,

@@ -149,37 +149,31 @@ app.get('/getemployee',(req,res)=>{
     
     var new_schedule = {
       Month_name:req.body.Month,
-      Year:year,
-      Team_id:team_id,
-      Employee_name:Employee_name,
-     Day:{Day1,Day2,Day3,Day4,Day5,Day6,Day7,Day8,Day9,Day10,
-      Day11,Day12,Day13,Day14,Day15,Day16,Day17,Day18,Day19,Day20,
-      Day21,Day23,Day23,Day24,Day25,Day26,Day27,Day28,Day29,Day30}
+      Year_num:req.body.year,
+      Team_id:req.body.team_id,
+      Employee_name:req.body.Employee_name,
+      // Day2,Day3,Day4,Day5,Day6,Day7,Day8,Day9,Day10,
+      // Day11,Day12,Day13,Day14,Day15,Day16,Day17,Day18,Day19,Day20,
+      // Day21,Day23,Day23,Day24,Day25,Day26,Day27,Day28,Day29,Day30}
 
      };
 
-      //Date_field, Employee_name, shift, Team_id, Month) 
-      // VALUES ('cellvalues_date',cellvalues_employee,cellvalues_shift,
-      // cellvalues_gsh,cellvalues_msh,cellvalues_nsh,cellvalues_leavehours,
-      // cellvalues_thours,team_id,month_number
+     //let insert_data=`INSERT INTO CALENDER (Month_name,Year,Team_id,Employee_name) VALUES ?`;
+     let insert_data= "INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) values ?";
     
-    
-    // const insert_query = 
-    // (Date_field, Employee_name, shift, General_shift_hours, 
-    // Morn_shfit_hours, Night_shift_hours, Leave_hours, Total_hours, Team_id, Month) 
-    // VALUES ('cellvalues_date',cellvalues_employee,cellvalues_shift,
-    // cellvalues_gsh,cellvalues_msh,cellvalues_nsh,cellvalues_leavehours,
-    // cellvalues_thours,team_id,month_number) `;
-    
-    connection.query(`INSERT INTO SCHEDULE SET ?`, new_schedule) 
+     connection.query(insert_data,new_schedule).then(data => {
+      // console.log(JSON.stringify(data));
+       //const result = JSON.stringify(data);
+       console.log(data)
 
-    res.send('record inserted successfully')
-  
-  .catch(error => {
-   console.error(error);
-  });
-
+       res.send(data)
+     })
+     .catch(error => {
+       console.error(error);
+     });
+    
  });
+
 
 var port = 3260;
 

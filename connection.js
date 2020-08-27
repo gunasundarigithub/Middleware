@@ -146,7 +146,16 @@ app.get('/getemployee',(req,res)=>{
 
     
 
-    console.log(req.query)
+    console.log(req.body)
+
+    connection
+  .execute(`INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) VALUES (${req.body.Month},${req.body.year},${req.body.team_id},${req.body.Employee_name})`)
+  .then(data => {
+    console.log(JSON.stringify(data, null, 2));
+  })
+  .catch(error => {
+    console.error(error);
+  });
     
     var new_schedule = {
       Month_name:req.query.Month,
@@ -159,18 +168,18 @@ app.get('/getemployee',(req,res)=>{
 
      };
 
-     let insert_data= `INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) VALUES (${req.query.Month},${req.query.year},${req.query.team_id},${req.query.Employee_name})`;
-    console.log(insert_data)
-     connection.query(insert_data).then(data => {
-      // console.log(JSON.stringify(data));
-       //const result = JSON.stringify(data);
-       console.log(data)
+    //  let insert_data= `INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) VALUES (${req.body.Month},${req.body.year},${req.body.team_id},${req.body.Employee_name})`;
+    // console.log(insert_data)
+    //  connection.query(insert_data).then(data => {
+    //   // console.log(JSON.stringify(data));
+    //    //const result = JSON.stringify(data);
+    //    console.log(data)
 
-       res.send(data)
-     })
-     .catch(error => {
-       console.error(error);
-     });
+    //    res.send(data)
+    //  })
+    //  .catch(error => {
+    //    console.error(error);
+    //  });
     
  });
 

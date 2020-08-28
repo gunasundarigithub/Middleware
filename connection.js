@@ -144,24 +144,24 @@ app.get('/getemployee',(req,res)=>{
 
   app.post('/postschedule',(req,res)=>{
 
-    console.log(req.body.Month)
-    console.log(req.query.month_number)
+    
+
+    console.log(req.query)
     
     var new_schedule = {
-      Month_name:req.body.Month,
-      Year_num:req.body.year,
-      Team_id:req.body.team_id,
-      Employee_name:req.body.Employee_name,
+      Month_name:req.query.Month,
+      Year_num:req.query.year,
+      Team_id:req.query.team_id,
+      Employee_name:req.query.Employee_name,
       // Day2,Day3,Day4,Day5,Day6,Day7,Day8,Day9,Day10,
       // Day11,Day12,Day13,Day14,Day15,Day16,Day17,Day18,Day19,Day20,
       // Day21,Day23,Day23,Day24,Day25,Day26,Day27,Day28,Day29,Day30}
 
      };
 
-     //let insert_data=`INSERT INTO CALENDER (Month_name,Year,Team_id,Employee_name) VALUES ?`;
-     let insert_data= "INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) values ?";
-    
-     connection.query(insert_data,new_schedule).then(data => {
+     let insert_data= `INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) VALUES (${req.query.Month},${req.query.year},${req.query.team_id},${req.query.Employee_name})`;
+    console.log(insert_data)
+     connection.query(insert_data).then(data => {
       // console.log(JSON.stringify(data));
        //const result = JSON.stringify(data);
        console.log(data)

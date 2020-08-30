@@ -30,9 +30,9 @@ const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Shif
 //     console.error(error);
 //   });
 
-app.get('/', (req, res) => {
-  res.send('Hello World, from express');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World, from express');
+// });
 
 app.get('/selectQuery',(req,res)=>{
 
@@ -63,7 +63,7 @@ app.get('/getcurrentshift',(req,res)=>{
 console.log(req.query.team_id)
 console.log(req.query.month_number)
 
-const Shift_query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
+const Shift_query = `SELECT * FROM Calender WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
 
   connection.query(Shift_query).then(data => {
    // console.log(JSON.stringify(data));
@@ -82,7 +82,7 @@ app.put('/updateshift',(req,res)=>{
 
 console.log(req.query)
 console.log(req.query.shift)
-const update_query = `Update Schedule set shift = '${req.query.shift}', General_shift_hours = '${req.query.g_hours}',Morn_shift_hours = '${req.query.M_hours}',Night_shift_hours = '${req.query.N_hours}',Leave_hours = '${req.query.L_hours}',T_H_hours = '${req.query.total_hours}' WHERE Employee_name ='${req.query.Employee_name}'`;
+const update_query = `Update Calender set Day = '${req.query.Day}' WHERE Employee_name ='${req.query.Employee_name}' AND Team_id =${req.query.team_id}`;
 connection.query(update_query) 
 
 res.send('updated successfully')
@@ -100,17 +100,16 @@ res.send('updated successfully')
  app.get('/getshift',(req,res)=>{
 
   console.log(req.query.team_id)
-  console.log(req.query.month_number)
+  console.log(req.query.month_name)
   
  // const Shift_query = `SELECT * FROM SCHEDULE WHERE Team_id = '${req.query.team_id}' AND Month = '${req.query.month_number}' `;
- const shift_query = `SELECT * FROM Schedule t1 INNER JOIN Shift t2 ON t1.Team_id = t2.Team_id
- WHERE t1.Team_id = '${req.query.team_id}' AND t2.Month = '${req.query.month_number}'`;
+ const shift_query = `SELECT * FROM Calender WHERE Team_id = '${req.query.team_id}' AND Month_name = '${req.query.month_name}'`;
   
 
     connection.query(shift_query).then(data => {
      // console.log(JSON.stringify(data));
       const result = JSON.stringify(data);
-      console.log(data)
+      console.log(data)                                             
       res.send(data)
     })
     .catch(error => {
@@ -144,12 +143,11 @@ app.get('/getemployee',(req,res)=>{
 
   app.post('/postschedule',(req,res)=>{
 
-    
+  console.log(req.body)
 
-    console.log(req.body)
-
+  //INSERT INTO Calender VALUES('August',2020,1,'Divya',1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
     connection
-  .execute(`INSERT INTO Calender (Month_name,Year_num,Team_id,Employee_name) VALUES (${req.body.Month},${req.body.year},${req.body.team_id},${req.body.Employee_name})`)
+  .execute(`INSERT INTO Calender VALUES (${req.body.Month},${req.body.Month_number},${req.body.year},${req.body.team_id},${req.body.Employee_name})`)
   .then(data => {
     console.log(JSON.stringify(data, null, 2));
   })

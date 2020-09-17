@@ -34,7 +34,7 @@ const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Shif
 //   res.send('Hello World, from express');
 // });
 
-app.get('/selectQuery',(req,res)=>{
+app.get('/getteam',(req,res)=>{
 
 console.log(req.query.test)
 
